@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simão | Technology & Web Development</title>
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        terminal: {
+                            bg: '#0b0f19',
+                            card: '#111827',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-terminal-bg dark:text-slate-100 font-sans antialiased transition-colors duration-300 selection:bg-emerald-500 selection:text-white">
+
+    <!-- ===================================================================== -->
+    <!-- CABEÇALHO / BARRA DE NAVEGAÇÃO                                        -->
+    <!-- ===================================================================== -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-terminal-bg/80 border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Logótipo / Nome -->
+            <a href="#" class="flex items-center space-x-2 group">
+                <span class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-mono font-bold text-sm shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                    &gt;_
+                </span>
+                <span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white">
+                    Simão<span class="text-emerald-500">.dev</span>
+                </span>
+            </a>
+
+            <!-- Links de Navegação (Desktop) -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#sobre" data-i18n="nav_about" class="text-slate-600 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 transition-colors">About Me</a>
+                <a href="#colecao" data-i18n="nav_collection" class="text-slate-600 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 transition-colors">My Collection</a>
+                <a href="#aprendizagem" data-i18n="nav_learning" class="text-slate-600 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 transition-colors">Learning</a>
+            </nav>
+
+            <!-- Botões de Ação (Idioma, Tema Escuro/Claro e Menu Mobile) -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Seletor de Idioma (EN | PT) - Inglês ativo por defeito -->
+                <div class="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-mono text-xs" role="group" aria-label="Select language">
+                    <button type="button" id="lang-en" data-lang="en" class="lang-btn px-2.5 py-1 rounded-lg font-bold bg-emerald-600 text-white transition-all focus:outline-none">
+                        EN
+                    </button>
+                    <button type="button" id="lang-pt" data-lang="pt" class="lang-btn px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all focus:outline-none">
+                        PT
+                    </button>
+                </div>
+
+                <!-- Botão Alternar Tema -->
+                <button type="button" id="theme-toggle" aria-label="Toggle theme" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+                </button>
+
+                <!-- Botão Menu Mobile -->
+                <button type="button" id="mobile-menu-btn" aria-label="Open menu" class="md:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                    <i data-lucide="menu" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Oculto por defeito) -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-terminal-card px-4 pt-2 pb-4 space-y-2">
+            <a href="#sobre" data-i18n="nav_about" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">About Me</a>
+            <a href="#colecao" data-i18n="nav_collection" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">My Collection</a>
+            <a href="#aprendizagem" data-i18n="nav_learning" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Learning</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================================================================= -->
+        <!-- SECÇÃO HERO (APRESENTAÇÃO PRINCIPAL)                              -->
+        <!-- ================================================================= -->
+        <section class="relative overflow-hidden py-16 sm:py-24 lg:py-28">
+            <div class="absolute inset-0 -z-10 pointer-events-none">
+                <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-emerald-500/10 dark:bg-emerald-500/15 blur-3xl rounded-full"></div>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Coluna Esquerda: Texto de Boas-vindas -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-medium">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span data-i18n="hero_badge">~/portfolio/welcome</span>
+                        </div>
+
+                        <h1 data-i18n="hero_title" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                            Hi, I am <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Simão</span>.
+                        </h1>
+
+                        <p data-i18n="hero_subtitle" class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                            I am an enthusiast passionate about <strong class="text-slate-900 dark:text-white font-semibold">technology</strong>, mobile devices, and hardware. Currently, I am taking my first steps in web development, learning <span class="font-mono text-sm px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400">HTML</span> and <span class="font-mono text-sm px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-cyan-600 dark:text-cyan-400">CSS</span> to build awesome things on the web.
+                        </p>
+
+                        <div class="flex flex-wrap gap-4 pt-2">
+                            <a href="#colecao" class="inline-flex items-center px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow-lg shadow-emerald-500/20 transition-all">
+                                <i data-lucide="smartphone" class="w-4 h-4 mr-2"></i>
+                                <span data-i18n="hero_btn_collection">View My Collection</span>
+                            </a>
+                            <a href="#sobre" data-i18n="hero_btn_more" class="inline-flex items-center px-6 py-3 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-medium border border-slate-200 dark:border-slate-700 transition-all">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Coluna Direita: Janela de Terminal / Código Interativa -->
+                    <div class="lg:col-span-5">
+                        <div class="rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden font-mono text-sm">
+                            <div class="bg-slate-800/80 px-4 py-3 flex items-center justify-between border-b border-slate-700/80">
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                </div>
+                                <span class="text-xs text-slate-400">simao@tech-lab:~</span>
+                                <div class="w-4"></div>
+                            </div>
+                            
+                            <div class="p-5 space-y-3 text-slate-300 leading-relaxed">
+                                <div>
+                                    <span class="text-emerald-400">simao@pc</span>:<span class="text-cyan-400">~</span>$ whoami
+                                    <p data-i18n="term_whoami" class="text-slate-400 mt-1">Simão — Tech Enthusiast & Phone Collector</p>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400">simao@pc</span>:<span class="text-cyan-400">~</span>$ <span data-i18n="term_cat_cmd">cat learning.txt</span>
+                                    <p data-i18n="term_learning" class="text-slate-400 mt-1">
+                                        &gt; Web structuring with <span class="text-amber-300">HTML5</span><br>
+                                        &gt; Design and layouts with <span class="text-cyan-300">CSS3</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400">simao@pc</span>:<span class="text-cyan-400">~</span>$ <span data-i18n="term_ls_cmd">ls devices/</span>
+                                    <p data-i18n="term_devices" class="text-emerald-300/90 mt-1 text-xs sm:text-sm">
+                                        galaxy-s4/ &nbsp;redmi-13-4g/ &nbsp;galaxy-ace-2/<br>
+                                        galaxy-chat/ &nbsp;galaxy-tab-e/ &nbsp;+others/
+                                    </p>
+                                </div>
+                                <div>
+                                    <span class="text-emerald-400">simao@pc</span>:<span class="text-cyan-400">~</span>$ <span data-i18n="term_uname_cmd">uname -o</span>
+                                    <p data-i18n="term_uname" class="text-amber-300/90 mt-1 text-xs sm:text-sm">
+                                        GNU/Linux ❤️ (Thank you, Linus Torvalds!)
+                                    </p>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-emerald-400">simao@pc</span>:<span class="text-cyan-400">~</span>$ <span class="ml-2 w-2 h-4 bg-emerald-400 inline-block animate-pulse"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- SECÇÃO SOBRE MIM                                                  -->
+        <!-- ================================================================= -->
+        <section id="sobre" class="py-16 bg-white dark:bg-terminal-card/50 border-y border-slate-200 dark:border-slate-800/80">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl">
+                    <div class="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold mb-2">
+                        <span>01.</span>
+                        <span data-i18n="about_kicker">ABOUT ME</span>
+                    </div>
+                    <h2 data-i18n="about_title" class="text-3xl font-bold text-slate-900 dark:text-white mb-6">
+                        Curiosity for everything with a screen and circuits
+                    </h2>
+                    <div class="space-y-4 text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
+                        <p data-i18n="about_p1">
+                            I have always loved exploring the world of technology. I enjoy understanding how devices work inside and out, testing different operating systems, and preserving phones and tablets from various eras.
+                        </p>
+                        <p data-i18n="about_p2">
+                            Right now, I am focused on learning <strong class="text-slate-900 dark:text-white">HTML</strong> and <strong class="text-slate-900 dark:text-white">CSS</strong>. This very website is part of my learning journey — a personal space where I can experiment with code, organize my ideas, and showcase my tech collection.
+                        </p>
+                        <p data-i18n="about_p3">
+                            I am also a huge fan of <strong class="text-slate-900 dark:text-white">Linux</strong>, open-source philosophy, and <strong class="text-emerald-600 dark:text-emerald-400">Linus Torvalds</strong> — the genius behind the Linux kernel (and Git!) that powers so much of the tech world I love, including Android!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- SECÇÃO A MINHA COLEÇÃO DE DISPOSITIVOS                            -->
+        <!-- ================================================================= -->
+        <section id="colecao" class="py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Cabeçalho da Secção -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    <div>
+                        <div class="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold mb-2">
+                            <span>02.</span>
+                            <span data-i18n="col_kicker">HARDWARE & RETRO TECH</span>
+                        </div>
+                        <h2 data-i18n="col_title" class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
+                            My Device Collection
+                        </h2>
+                        <p data-i18n="col_subtitle" class="text-slate-600 dark:text-slate-400 mt-2 max-w-2xl">
+                            A selection of phones and tablets from my personal collection, ranging from iconic Samsung classics to modern models.
+                        </p>
+                    </div>
+
+                    <!-- Filtro rápido interativo -->
+                    <div class="flex flex-wrap gap-2" id="collection-filters">
+                        <button type="button" data-filter="all" data-i18n="filter_all" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-600 text-white transition-all">
+                            All (6)
+                        </button>
+                        <button type="button" data-filter="samsung" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
+                            Samsung
+                        </button>
+                        <button type="button" data-filter="xiaomi" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
+                            Xiaomi / Redmi
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grelha de Cartões de Dispositivos -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="devices-grid">
+
+                    <!-- CARTÃO 1: Samsung Galaxy S4 -->
+                    <article data-brand="samsung" class="device-card group relative rounded-2xl bg-white dark:bg-terminal-card border border-slate-200 dark:border-slate-800 p-6 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="smartphone" class="w-6 h-6"></i>
+                                </div>
+                                <span data-i18n="s4_badge" class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                    2013 • Classic
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                Samsung Galaxy S4
+                            </h3>
+                            <p data-i18n="s4_desc" class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                A true icon of the golden era of Android smartphones, famous for its Full HD Super AMOLED display and innovative features for its time.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+                            <span data-i18n="s4_spec">5.0" AMOLED Display</span>
+                            <span data-i18n="in_collection" class="text-emerald-600 dark:text-emerald-400">In Collection</span>
+                        </div>
+                    </article>
+
+                    <!-- CARTÃO 2: Redmi 13 4G -->
+                    <article data-brand="xiaomi" class="device-card group relative rounded-2xl bg-white dark:bg-terminal-card border border-slate-200 dark:border-slate-800 p-6 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="smartphone" class="w-6 h-6"></i>
+                                </div>
+                                <span data-i18n="redmi_badge" class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                                    Modern • 4G
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                Redmi 13 4G
+                            </h3>
+                            <p data-i18n="redmi_desc" class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                A modern Xiaomi device featuring a large 90Hz display, sleek design, and great battery life for everyday use.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+                            <span data-i18n="redmi_spec">108MP Camera • HyperOS</span>
+                            <span data-i18n="in_collection" class="text-emerald-600 dark:text-emerald-400">In Collection</span>
+                        </div>
+                    </article>
+
+                    <!-- CARTÃO 3: Samsung Galaxy Ace 2 -->
+                    <article data-brand="samsung" class="device-card group relative rounded-2xl bg-white dark:bg-terminal-card border border-slate-200 dark:border-slate-800 p-6 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="smartphone" class="w-6 h-6"></i>
+                                </div>
+                                <span data-i18n="ace2_badge" class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                    2012 • Compact
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                Samsung Galaxy Ace 2
+                            </h3>
+                            <p data-i18n="ace2_desc" class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                A compact and nostalgic smartphone from the Galaxy Ace lineup, featuring a physical home button and the classic TouchWiz interface.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+                            <span data-i18n="ace2_spec">3.8" Display • Dual-Core</span>
+                            <span data-i18n="in_collection" class="text-emerald-600 dark:text-emerald-400">In Collection</span>
+                        </div>
+                    </article>
+
+                    <!-- CARTÃO 4: Samsung Galaxy Chat -->
+                    <article data-brand="samsung" class="device-card group relative rounded-2xl bg-white dark:bg-terminal-card border border-slate-200 dark:border-slate-800 p-6 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="keyboard" class="w-6 h-6"></i>
+                                </div>
+                                <span data-i18n="chat_badge" class="px-2.5 py-1 rounded-md text-xs font-mono bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20">
+                                    2012 • QWERTY Keyboard
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                Samsung Galaxy Chat
+                            </h3>
+                            <p data-i18n="chat_desc" class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                A super curious and distinctive piece in the collection, combining an Android touchscreen with a full physical QWERTY keyboard on the front.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+                            <span data-i18n="chat_spec">Model GT-B5330</span>
+                            <span data-i18n="in_collection" class="text-emerald-600 dark:text-emerald-400">In Collection</span>
+                        </div>
+                    </article>
+
+                    <!-- CARTÃO 5: Samsung Galaxy Tab E -->
+                    <article data-brand="samsung" class="device-card group relative rounded-2xl bg-white dark:bg-terminal-card border border-slate-200 dark:border-slate-800 p-6 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="tablet" class="w-6 h-6"></i>
+                                </div>
+                                <span data-i18n="tabe_badge" class="px-2.5 py-1 rounded-md text-xs font-mono bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">
+                                    Tablet • 9.6"
+                                </span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                Samsung Galaxy Tab E
+                            </h3>
+                            <p data-i18n="tabe_desc" class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                Versatile tablet with a large 9.6-inch screen and textured non-slip back, great for reading, media, and app testing.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
+                            <span data-i18n="tabe_spec">9.6" WXGA Display</span>
+                            <span data-i18n="in_collection" class="text-emerald-600 dark:text-emerald-400">In Collection</span>
+                        </div>
+                    </article>
+
+                    <!-- CARTÃO 6: Entre outros... -->
+                    <article data-brand="other" class="device-card group relative rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200/70 dark:from-slate-800/80 dark:to-terminal-card border border-dashed border-slate-300 dark:border-slate-700 p-6 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:rotate-12 transition-transform">
+                                    <i data-lucide="plus-circle" class="w-6 h-6"></i>
+                                </div>
+                                <span data-i18n="other_badge" class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                                    Growing
+                                </span>
+                            </div>
+                            <h3 data-i18n="other_title" class="text-xl font-bold text-slate-900 dark:text-white">
+                                Among others...
+                            </h3>
+                            <p data-i18n="other_desc" class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                                The collection doesn't stop here! I also have several other phones and gadgets stored away and I am always on the lookout for new tech relics.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between text-xs font-mono text-emerald-600 dark:text-emerald-400">
+                            <span data-i18n="other_spec">+ More devices</span>
+                            <span data-i18n="other_status">To be continued...</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- SECÇÃO COMPETÊNCIAS & APRENDIZAGEM                                -->
+        <!-- ================================================================= -->
+        <section id="aprendizagem" class="py-16 bg-white dark:bg-terminal-card/50 border-t border-slate-200 dark:border-slate-800/80">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="mb-12">
+                    <div class="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold mb-2">
+                        <span>03.</span>
+                        <span data-i18n="learn_kicker">JOURNEY & INTERESTS</span>
+                    </div>
+                    <h2 data-i18n="learn_title" class="text-3xl font-bold text-slate-900 dark:text-white">
+                        What I Am Learning & Exploring
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Cartão HTML5 -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-terminal-bg border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="p-2 rounded-lg bg-orange-500/10 text-orange-500 font-mono font-bold text-sm">&lt;/&gt;</span>
+                                <h3 class="font-bold text-lg text-slate-900 dark:text-white">HTML5</h3>
+                            </div>
+                            <span data-i18n="badge_learning" class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Learning</span>
+                        </div>
+                        <p data-i18n="html_desc" class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                            Semantic structuring of web pages, creating sections, lists, links, and clean code organization.
+                        </p>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-orange-500 to-amber-500 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cartão CSS3 -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-terminal-bg border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="p-2 rounded-lg bg-cyan-500/10 text-cyan-500 font-mono font-bold text-sm">#css</span>
+                                <h3 data-i18n="css_title" class="font-bold text-lg text-slate-900 dark:text-white">CSS3 & Responsive Design</h3>
+                            </div>
+                            <span data-i18n="badge_learning" class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Learning</span>
+                        </div>
+                        <p data-i18n="css_desc" class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                            Styling elements, colors, typography, Flexbox, CSS Grid, and adapting websites for mobile and desktop.
+                        </p>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-2 rounded-full" style="width: 55%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cartão Tecnologia & Hardware -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-terminal-bg border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
+                                    <i data-lucide="cpu" class="w-4 h-4"></i>
+                                </span>
+                                <h3 data-i18n="hw_title" class="font-bold text-lg text-slate-900 dark:text-white">Technology & Hardware</h3>
+                            </div>
+                            <span data-i18n="badge_passion" class="text-xs font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">Passion</span>
+                        </div>
+                        <p data-i18n="hw_desc" class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                            Analyzing technical specs, comparing smartphone generations, maintaining and preserving devices.
+                        </p>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cartão Sistemas Operativos -->
+                    <div class="p-6 rounded-2xl bg-slate-50 dark:bg-terminal-bg border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="p-2 rounded-lg bg-purple-500/10 text-purple-500">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                </span>
+                                <h3 data-i18n="os_title" class="font-bold text-lg text-slate-900 dark:text-white">Operating Systems</h3>
+                            </div>
+                            <span data-i18n="badge_exploration" class="text-xs font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">Exploring</span>
+                        </div>
+                        <p data-i18n="os_desc" class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                            Experience with various Android versions (from classic Gingerbread/Jelly Bean to modern HyperOS) and desktop systems.
+                        </p>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-2 rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cartão Linux & Linus Torvalds -->
+                    <div class="md:col-span-2 p-6 rounded-2xl bg-slate-50 dark:bg-terminal-bg border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="p-2 rounded-lg bg-amber-500/10 text-amber-500">
+                                    <i data-lucide="terminal" class="w-4 h-4"></i>
+                                </span>
+                                <h3 data-i18n="linux_title" class="font-bold text-lg text-slate-900 dark:text-white">Linux &amp; Linus Torvalds</h3>
+                            </div>
+                            <span data-i18n="badge_linux" class="text-xs font-mono px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">Big Fan 🐧</span>
+                        </div>
+                        <p data-i18n="linux_desc" class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                            Deep admiration for Linux, the freedom of open-source software, and Linus Torvalds for creating the Linux kernel that runs on servers, desktops, and even inside every Android phone in my collection.
+                        </p>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-gradient-to-r from-amber-500 to-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- RODAPÉ (FOOTER)                                                       -->
+    <!-- ===================================================================== -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 py-8 bg-slate-100/50 dark:bg-terminal-bg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
+            <div class="flex items-center space-x-2">
+                <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">&gt;_</span>
+                <span>&copy; <span id="current-year"></span> <span data-i18n="footer_text">Simão. Made with passion for technology, HTML & CSS.</span></span>
+            </div>
+            <div class="font-mono text-xs">
+                <span data-i18n="footer_status">status: online</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- JAVASCRIPT PARA INTERATIVIDADE (IDIOMA, TEMA, FILTROS E ÍCONES)       -->
+    <!-- ===================================================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Inicializar ícones Lucide
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // 2. Atualizar o ano no rodapé
+            const yearEl = document.getElementById('current-year');
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
+
+            // 3. Dicionário de Traduções (Inglês por defeito e Português)
+            const translations = {
+                en: {
+                    page_title: "Simão | Technology & Web Development",
+                    nav_about: "About Me",
+                    nav_collection: "My Collection",
+                    nav_learning: "Learning",
+                    hero_badge: "~/portfolio/welcome",
+                    hero_title: 'Hi, I am <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Simão</span>.',
+                    hero_subtitle: 'I am an enthusiast passionate about <strong class="text-slate-900 dark:text-white font-semibold">technology</strong>, mobile devices, and hardware. Currently, I am taking my first steps in web development, learning <span class="font-mono text-sm px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400">HTML</span> and <span class="font-mono text-sm px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-cyan-600 dark:text-cyan-400">CSS</span> to build awesome things on the web.',
+                    hero_btn_collection: "View My Collection",
+                    hero_btn_more: "Learn More",
+                    term_whoami: "Simão — Tech Enthusiast & Phone Collector",
+                    term_cat_cmd: "cat learning.txt",
+                    term_learning: '&gt; Web structuring with <span class="text-amber-300">HTML5</span><br>&gt; Design and layouts with <span class="text-cyan-300">CSS3</span>',
+                    term_ls_cmd: "ls devices/",
+                    term_devices: "galaxy-s4/ &nbsp;redmi-13-4g/ &nbsp;galaxy-ace-2/<br>galaxy-chat/ &nbsp;galaxy-tab-e/ &nbsp;+others/",
+                    term_uname_cmd: "uname -o",
+                    term_uname: "GNU/Linux ❤️ (Thank you, Linus Torvalds!)",
+                    about_kicker: "ABOUT ME",
+                    about_title: "Curiosity for everything with a screen and circuits",
+                    about_p1: "I have always loved exploring the world of technology. I enjoy understanding how devices work inside and out, testing different operating systems, and preserving phones and tablets from various eras.",
+                    about_p2: 'Right now, I am focused on learning <strong class="text-slate-900 dark:text-white">HTML</strong> and <strong class="text-slate-900 dark:text-white">CSS</strong>. This very website is part of my learning journey — a personal space where I can experiment with code, organize my ideas, and showcase my tech collection.',
+                    about_p3: 'I am also a huge fan of <strong class="text-slate-900 dark:text-white">Linux</strong>, open-source philosophy, and <strong class="text-emerald-600 dark:text-emerald-400">Linus Torvalds</strong> — the genius behind the Linux kernel (and Git!) that powers so much of the tech world I love, including Android!',
+                    col_kicker: "HARDWARE & RETRO TECH",
+                    col_title: "My Device Collection",
+                    col_subtitle: "A selection of phones and tablets from my personal collection, ranging from iconic Samsung classics to modern models.",
+                    filter_all: "All (6)",
+                    s4_badge: "2013 • Classic",
+                    s4_desc: "A true icon of the golden era of Android smartphones, famous for its Full HD Super AMOLED display and innovative features for its time.",
+                    s4_spec: '5.0" AMOLED Display',
+                    redmi_badge: "Modern • 4G",
+                    redmi_desc: "A modern Xiaomi device featuring a large 90Hz display, sleek design, and great battery life for everyday use.",
+                    redmi_spec: "108MP Camera • HyperOS",
+                    ace2_badge: "2012 • Compact",
+                    ace2_desc: "A compact and nostalgic smartphone from the Galaxy Ace lineup, featuring a physical home button and the classic TouchWiz interface.",
+                    ace2_spec: '3.8" Display • Dual-Core',
+                    chat_badge: "2012 • QWERTY Keyboard",
+                    chat_desc: "A super curious and distinctive piece in the collection, combining an Android touchscreen with a full physical QWERTY keyboard on the front.",
+                    chat_spec: "Model GT-B5330",
+                    tabe_badge: 'Tablet • 9.6"',
+                    tabe_desc: "Versatile tablet with a large 9.6-inch screen and textured non-slip back, great for reading, media, and app testing.",
+                    tabe_spec: '9.6" WXGA Display',
+                    other_badge: "Growing",
+                    other_title: "Among others...",
+                    other_desc: "The collection doesn't stop here! I also have several other phones and gadgets stored away and I am always on the lookout for new tech relics.",
+                    other_spec: "+ More devices",
+                    other_status: "To be continued...",
+                    in_collection: "In Collection",
+                    learn_kicker: "JOURNEY & INTERESTS",
+                    learn_title: "What I Am Learning & Exploring",
+                    badge_learning: "Learning",
+                    badge_passion: "Passion",
+                    badge_exploration: "Exploring",
+                    html_desc: "Semantic structuring of web pages, creating sections, lists, links, and clean code organization.",
+                    css_title: "CSS3 & Responsive Design",
+                    css_desc: "Styling elements, colors, typography, Flexbox, CSS Grid, and adapting websites for mobile and desktop.",
+                    hw_title: "Technology & Hardware",
+                    hw_desc: "Analyzing technical specs, comparing smartphone generations, maintaining and preserving devices.",
+                    os_title: "Operating Systems",
+                    os_desc: "Experience with various Android versions (from classic Gingerbread/Jelly Bean to modern HyperOS) and desktop systems.",
+                    linux_title: "Linux &amp; Linus Torvalds",
+                    badge_linux: "Big Fan 🐧",
+                    linux_desc: "Deep admiration for Linux, the freedom of open-source software, and Linus Torvalds for creating the Linux kernel that runs on servers, desktops, and even inside every Android phone in my collection.",
+                    footer_text: "Simão. Made with passion for technology, HTML & CSS.",
+                    footer_status: "status: online"
+                },
+                pt: {
+                    page_title: "Simão | Tecnologia & Desenvolvimento Web",
+                    nav_about: "Sobre Mim",
+                    nav_collection: "A Minha Coleção",
+                    nav_learning: "Aprendizagem",
+                    hero_badge: "~/portefolio/bem-vindo",
+                    hero_title: 'Olá, eu sou o <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Simão</span>.',
+                    hero_subtitle: 'Sou um entusiasta apaixonado por <strong class="text-slate-900 dark:text-white font-semibold">tecnologia</strong>, dispositivos móveis e hardware. Atualmente, estou a dar os meus primeiros passos no desenvolvimento web, a aprender <span class="font-mono text-sm px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-emerald-600 dark:text-emerald-400">HTML</span> e <span class="font-mono text-sm px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-cyan-600 dark:text-cyan-400">CSS</span> para criar projetos incríveis na web.',
+                    hero_btn_collection: "Ver a Minha Coleção",
+                    hero_btn_more: "Saber Mais",
+                    term_whoami: "Simão — Entusiasta de Tecnologia & Colecionador",
+                    term_cat_cmd: "cat aprendizagem.txt",
+                    term_learning: '&gt; Estruturação web com <span class="text-amber-300">HTML5</span><br>&gt; Design e layouts com <span class="text-cyan-300">CSS3</span>',
+                    term_ls_cmd: "ls dispositivos/",
+                    term_devices: "galaxy-s4/ &nbsp;redmi-13-4g/ &nbsp;galaxy-ace-2/<br>galaxy-chat/ &nbsp;galaxy-tab-e/ &nbsp;+outros/",
+                    term_uname_cmd: "uname -o",
+                    term_uname: "GNU/Linux ❤️ (Obrigado, Linus Torvalds!)",
+                    about_kicker: "SOBRE MIM",
+                    about_title: "Curiosidade por tudo o que tem ecrã e circuitos",
+                    about_p1: "Sempre adorei explorar o mundo da tecnologia. Gosto de perceber como os dispositivos funcionam por dentro e por fora, testar diferentes sistemas operativos e preservar telemóveis e tablets de várias épocas.",
+                    about_p2: 'Neste momento, estou focado em aprender <strong class="text-slate-900 dark:text-white">HTML</strong> e <strong class="text-slate-900 dark:text-white">CSS</strong>. Este próprio website faz parte da minha jornada de aprendizagem — um espaço pessoal onde posso experimentar código, organizar ideias e mostrar a minha coleção tecnológica.',
+                    about_p3: 'Sou também um grande fã de <strong class="text-slate-900 dark:text-white">Linux</strong>, da filosofia open-source e do <strong class="text-emerald-600 dark:text-emerald-400">Linus Torvalds</strong> — o génio por trás do kernel Linux (e do Git!) que dá vida a grande parte do mundo tecnológico que adoro, incluindo o Android!',
+                    col_kicker: "HARDWARE & RETRO TECH",
+                    col_title: "A Minha Coleção de Dispositivos",
+                    col_subtitle: "Uma seleção de telemóveis e tablets da minha coleção pessoal, desde clássicos icónicos da Samsung até modelos modernos.",
+                    filter_all: "Todos (6)",
+                    s4_badge: "2013 • Clássico",
+                    s4_desc: "Um verdadeiro ícone da era dourada dos smartphones Android, famoso pelo seu ecrã Super AMOLED Full HD e funcionalidades inovadoras para a época.",
+                    s4_spec: 'Ecrã 5.0" AMOLED',
+                    redmi_badge: "Moderno • 4G",
+                    redmi_desc: "Um dispositivo moderno da Xiaomi com um ecrã amplo de 90Hz, design elegante e excelente autonomia para o dia a dia.",
+                    redmi_spec: "Câmara 108MP • HyperOS",
+                    ace2_badge: "2012 • Compacto",
+                    ace2_desc: "Um smartphone compacto e nostálgico da linha Galaxy Ace, com botão físico principal e a clássica interface TouchWiz.",
+                    ace2_spec: 'Ecrã 3.8" • Dual-Core',
+                    chat_badge: "2012 • Teclado QWERTY",
+                    chat_desc: "Uma peça super curiosa e distinta na coleção, combinando ecrã tátil Android com um teclado físico QWERTY completo na frente.",
+                    chat_spec: "Modelo GT-B5330",
+                    tabe_badge: 'Tablet • 9.6"',
+                    tabe_desc: "Tablet versátil com ecrã amplo de 9.6 polegadas e traseira texturizada antiderrapante, ótimo para leitura, multimédia e testes de aplicações.",
+                    tabe_spec: 'Ecrã 9.6" WXGA',
+                    other_badge: "Em crescimento",
+                    other_title: "Entre outros...",
+                    other_desc: "A coleção não fica por aqui! Tenho ainda vários outros telemóveis e gadgets guardados e estou sempre à procura de novas relíquias tecnológicas.",
+                    other_spec: "+ Mais dispositivos",
+                    other_status: "Continua...",
+                    in_collection: "Na Coleção",
+                    learn_kicker: "PERCURSO & INTERESSES",
+                    learn_title: "O Que Estou a Aprender e Explorar",
+                    badge_learning: "A Aprender",
+                    badge_passion: "Paixão",
+                    badge_exploration: "Exploração",
+                    html_desc: "Estruturação semântica de páginas web, criação de secções, listas, ligações e organização limpa do código.",
+                    css_title: "CSS3 & Design Responsivo",
+                    css_desc: "Estilização de elementos, cores, tipografia, Flexbox, CSS Grid e adaptação de sites para telemóvel e computador.",
+                    hw_title: "Tecnologia & Hardware",
+                    hw_desc: "Análise de especificações técnicas, comparação de gerações de smartphones, manutenção e preservação de equipamentos.",
+                    os_title: "Sistemas Operativos",
+                    os_desc: "Experiência com várias versões de Android (desde os clássicos Gingerbread/Jelly Bean até ao moderno HyperOS) e sistemas de computador.",
+                    linux_title: "Linux &amp; Linus Torvalds",
+                    badge_linux: "Grande Fã 🐧",
+                    linux_desc: "Enorme admiração pelo Linux, pela liberdade do software open-source e pelo Linus Torvalds por ter criado o kernel Linux que corre em servidores, computadores e até dentro de cada telemóvel Android da minha coleção.",
+                    footer_text: "Simão. Feito com paixão por tecnologia, HTML & CSS.",
+                    footer_status: "estado: online"
+                }
+            };
+
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const htmlElement = document.documentElement;
+
+            function setLanguage(lang) {
+                const dict = translations[lang] || translations.en;
+
+                htmlElement.setAttribute('lang', lang === 'pt' ? 'pt-PT' : 'en');
+                document.title = dict.page_title;
+
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.innerHTML = dict[key];
+                    }
+                });
+
+                langBtns.forEach(btn => {
+                    const isSelected = btn.getAttribute('data-lang') === lang;
+                    if (isSelected) {
+                        btn.classList.add('bg-emerald-600', 'text-white', 'font-bold');
+                        btn.classList.remove('text-slate-600', 'dark:text-slate-400', 'font-medium');
+                    } else {
+                        btn.classList.remove('bg-emerald-600', 'text-white', 'font-bold');
+                        btn.classList.add('text-slate-600', 'dark:text-slate-400', 'font-medium');
+                    }
+                });
+
+                try {
+                    localStorage.setItem('simao_portfolio_lang', lang);
+                } catch (e) {}
+            }
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setLanguage(btn.getAttribute('data-lang'));
+                });
+            });
+
+            // Padrão sempre Inglês para novos visitantes (a menos que já tenha escolhido PT antes)
+            try {
+                const savedLang = localStorage.getItem('simao_portfolio_lang');
+                setLanguage(savedLang === 'pt' ? 'pt' : 'en');
+            } catch (e) {
+                setLanguage('en');
+            }
+
+            // 4. Alternar entre Tema Escuro e Tema Claro
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    htmlElement.classList.toggle('dark');
+                });
+            }
+
+            // 5. Menu Mobile
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+
+            // 6. Filtros da Coleção de Dispositivos
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const deviceCards = document.querySelectorAll('.device-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-emerald-600', 'text-white');
+                        b.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+                    });
+                    btn.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+                    btn.classList.add('bg-emerald-600', 'text-white');
+
+                    deviceCards.forEach(card => {
+                        const brand = card.getAttribute('data-brand');
+                        if (filter === 'all' || brand === filter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
